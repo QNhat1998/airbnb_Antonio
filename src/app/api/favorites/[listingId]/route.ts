@@ -13,7 +13,7 @@ export async function POST(request: Request,{ params }: { params: IParams }) {
     return NextResponse.error();
   }
 
-  const { listingId } = await params;
+  const { listingId } = params;
 
   if (
     !listingId ||
