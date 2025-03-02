@@ -3,11 +3,10 @@ import { NextResponse } from "next/server";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import prisma from "@/app/libs/prismadb";
 
-interface IParams {
-  listingId: string;
-}
-
-export async function POST(request: Request,{ params }: { params: IParams }) {
+export async function POST(
+  request: Request,
+  { params }: { params: { listingId: string } },
+) {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
@@ -26,7 +25,6 @@ export async function POST(request: Request,{ params }: { params: IParams }) {
   const favoriteIds = [
     ...(currentUser.favoriteIds || []),
   ];
-
   favoriteIds.push(listingId);
 
   const user = await prisma.user.update({
@@ -43,7 +41,7 @@ export async function POST(request: Request,{ params }: { params: IParams }) {
 
 export async function DELETE(
   request: Request,
-  { params }: { params: IParams },
+  { params }: { params: { listingId: string } },
 ) {
   const currentUser = await getCurrentUser();
 
@@ -63,7 +61,6 @@ export async function DELETE(
   let favoriteIds = [
     ...(currentUser.favoriteIds || []),
   ];
-
   favoriteIds = favoriteIds.filter(
     (id) => id !== listingId,
   );
