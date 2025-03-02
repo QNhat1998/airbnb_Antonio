@@ -1,9 +1,14 @@
+import { execSync } from "child_process";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
   typescript: {
     ignoreBuildErrors: true, // ✅ Bỏ qua lỗi TypeScript khi build
+  },
+  webpack: (config) => {
+    execSync("npx prisma generate"); // ✅ Chạy Prisma Generate trước khi build
+    return config;
   },
   images: {
     remotePatterns: [
