@@ -16,9 +16,17 @@ const eslintConfig = [
   ),
   {
     rules: {
-      "@typescript-eslint/no-explicit-any": "off", // 🔥 Cho phép sử dụng `any`
-      "no-var": "off", // 🔥 Cho phép dùng `var`
-      "prefer-const": "off", // 🔥 Không bắt buộc dùng `const`
+      "@typescript-eslint/no-explicit-any": "off", // ✅ Cho phép sử dụng `any`
+      "no-var": "off", // ✅ Cho phép dùng `var`
+      "prefer-const": "off", // ✅ Không bắt buộc dùng `const`
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        { argsIgnorePattern: "^_" },
+      ], // ✅ Không báo lỗi nếu biến bắt đầu bằng `_`
+      "@typescript-eslint/no-non-null-assertion":
+        "off", // ✅ Cho phép sử dụng `!`
+      "@typescript-eslint/no-unsafe-assignment":
+        "off", // ✅ Không cảnh báo khi gán kiểu dữ liệu không an toàn
     },
   },
 ];
