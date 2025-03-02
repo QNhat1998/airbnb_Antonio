@@ -1,20 +1,22 @@
-import { NextResponse } from "next/server";
-
+import {
+  NextRequest,
+  NextResponse,
+} from "next/server";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import prisma from "@/app/libs/prismadb";
 
 export async function POST(
-  request: Request,
-  { params }: { params: { listingId: string } },
+  req: NextRequest,
+  context: { params: { listingId: string } },
 ) {
-  const currentUser = await getCurrentUser();
+  const { params } = context; // Lấy params từ context
 
+  const currentUser = await getCurrentUser();
   if (!currentUser) {
     return NextResponse.error();
   }
 
   const { listingId } = params;
-
   if (
     !listingId ||
     typeof listingId !== "string"
@@ -28,29 +30,25 @@ export async function POST(
   favoriteIds.push(listingId);
 
   const user = await prisma.user.update({
-    where: {
-      id: currentUser.id,
-    },
-    data: {
-      favoriteIds,
-    },
+    where: { id: currentUser.id },
+    data: { favoriteIds },
   });
 
   return NextResponse.json(user);
 }
 
 export async function DELETE(
-  request: Request,
-  { params }: { params: { listingId: string } },
+  req: NextRequest,
+  context: { params: { listingId: string } },
 ) {
-  const currentUser = await getCurrentUser();
+  const { params } = context;
 
+  const currentUser = await getCurrentUser();
   if (!currentUser) {
     return NextResponse.error();
   }
 
   const { listingId } = params;
-
   if (
     !listingId ||
     typeof listingId !== "string"
@@ -66,12 +64,8 @@ export async function DELETE(
   );
 
   const user = await prisma.user.update({
-    where: {
-      id: currentUser.id,
-    },
-    data: {
-      favoriteIds,
-    },
+    where: { id: currentUser.id },
+    data: { favoriteIds },
   });
 
   return NextResponse.json(user);
