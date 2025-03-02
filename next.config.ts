@@ -6,10 +6,6 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true, // ✅ Bỏ qua lỗi TypeScript khi build
   },
-  webpack: (config) => {
-    execSync("npx prisma generate"); // ✅ Chạy Prisma Generate trước khi build
-    return config;
-  },
   images: {
     remotePatterns: [
       {
